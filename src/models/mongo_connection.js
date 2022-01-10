@@ -5,11 +5,11 @@ const { EventEmitter } = require('events');
 class MongoDBConnection extends EventEmitter {
   constructor() {
     super();
-    this.mongodb_host = mongodb.host;
-    this.mongodb_port = parseInt(mongodb.port);
-    this.mongodb_user = mongodb.user;
-    this.mongodb_password = mongodb.password;
-    this.mongodb_database = mongodb.database;
+    this.mongodb_host = process.env.MONGO_HOST;
+    this.mongodb_port = +process.env.MONGO_PORT;
+    this.mongodb_user = process.env.MONGO_HOST;
+    this.mongodb_password = process.env.MONGO_HOST;
+    this.mongodb_database = process.env.MONGO_HOST;
     // this.initMongoDBConnection();
     this.connected = false;
   }

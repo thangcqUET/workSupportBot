@@ -1,8 +1,14 @@
 const { Telegraf } = require('telegraf');
 const HttpsProxyAgent = require('https-proxy-agent')
 const process = require('process');
+
 const bot = new Telegraf(process.env.BOT_TOKEN, {
-  telegram: { agent: new HttpsProxyAgent({host: process.env.PROXY_HOST, port: (+process.env.PROXY_PORT)}) }
+  telegram: {
+    agent: (process.env.PROXY_HOST && (+process.env.PROXY_PORT)) ? new HttpsProxyAgent({
+      host: process.env.PROXY_HOST || '',
+      port: (+process.env.PROXY_PORT) || '',
+    }) : null,
+  },
 });
 
 // bot.use(async (ctx, next) => {
@@ -12,7 +18,11 @@ const bot = new Telegraf(process.env.BOT_TOKEN, {
 //   console.timeEnd(`Processing update ${ctx.update.update_id}`);
 // });
 bot.command('log', (ctx) => {
-  ctx.reply('Hello');
+  let text = ctx.message.text;
+  let log = text.split('/log')[1].trim();
+  let timestamp = ctx.message.date;
+  let detail = '';
+  let telegramUserId = ctx.message.from.id;
 })
 bot.launch();
 // Enable graceful stop
