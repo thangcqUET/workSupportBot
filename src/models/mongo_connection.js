@@ -7,9 +7,9 @@ class MongoDBConnection extends EventEmitter {
     super();
     this.mongodb_host = process.env.MONGO_HOST;
     this.mongodb_port = +process.env.MONGO_PORT;
-    this.mongodb_user = process.env.MONGO_HOST;
-    this.mongodb_password = process.env.MONGO_HOST;
-    this.mongodb_database = process.env.MONGO_HOST;
+    this.mongodb_user = process.env.MONGO_USER;
+    this.mongodb_password = process.env.MONGO_PASS;
+    this.mongodb_database = process.env.MONGO_DATABASE;
     // this.initMongoDBConnection();
     this.connected = false;
   }
