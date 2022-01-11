@@ -2,13 +2,17 @@ const { Schema } = require('mongoose');
 
 const UserSchema = new Schema({
   userId: {
-    type: String,
+    type: Number,
     required: true,
   },
   name: {
     type: String,
     required: false,
   },
+  username:{
+    type:String,
+    required: false,
+  }
 }, {
   timestamps: true,
   toJSON: { virtuals: true },

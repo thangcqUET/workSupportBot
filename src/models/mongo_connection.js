@@ -1,29 +1,28 @@
-const { mongodb } = require('config');
 const mongoose = require('mongoose');
 const { EventEmitter } = require('events');
 
 class MongoDBConnection extends EventEmitter {
   constructor() {
     super();
-    this.mongodb_host = process.env.MONGO_HOST;
-    this.mongodb_port = +process.env.MONGO_PORT;
-    this.mongodb_user = process.env.MONGO_USER;
-    this.mongodb_password = process.env.MONGO_PASS;
-    this.mongodb_database = process.env.MONGO_DATABASE;
+    this.mongodbHost = process.env.MONGO_HOST;
+    this.mongodbPort = +process.env.MONGO_PORT;
+    this.mongodbUser = process.env.MONGO_USER;
+    this.mongodbPassword = process.env.MONGO_PASS;
+    this.mongodbDatabase = process.env.MONGO_DATABASE;
     // this.initMongoDBConnection();
     this.connected = false;
   }
 
   initMongoDBConnection() {
     return new Promise((resolve, reject) => {
-      const url = `mongodb://${this.mongodb_host}:${this.mongodb_port}/${this.mongodb_database}`;
+      const url = `mongodb://${this.mongodbHost}:${this.mongodbPort}/${this.mongodbDatabase}`;
       mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        poolSize: 10,
-        useCreateIndex: true,
+        // poolSize: 10,
+        // useCreateIndex: true,
         autoIndex: false,
-        useFindAndModify: false,
+        // useFindAndModify: false,
       }).catch((err) => {
         console.error(`[MongoDB] Error: ${err}`);
         reject(err);
@@ -35,7 +34,7 @@ class MongoDBConnection extends EventEmitter {
         this.emit('error', err);
       });
       this.db.on('open', () => {
-        console.log(`[MongoDB] Connected to mongodb://${this.mongodb_host}:${this.mongodb_port}/${this.mongodb_database}`);
+        console.log(`[MongoDB] Connected to mongodb://${this.mongodbHost}:${this.mongodbPort}/${this.mongodbDatabase}`);
         this.connected = true;
         this.emit('open');
         resolve();
@@ -43,20 +42,16 @@ class MongoDBConnection extends EventEmitter {
     });
   }
 
-  exportUserModel(userId) {
+  exportUserModel() {
     const userSchema = require('./schemas/user');
-    userSchema.path('events').ref(`${chn_id}_event`);
-    const file_model = mongoose.model(`${chn_id}_mediafile`, file_schema);
-    // file_model.createIndexes();
-    return file_model;
+    const userModel = mongoose.model(`Users`, userSchema);
+    return userModel;
   }
 
-  exportEventModel(chn_id) {
-    const event_schema = require('./schemas/events_schema');
-    event_schema.path('files').ref(`${chn_id}_mediafile`);
-    const event_model = mongoose.model(`${chn_id}_event`, event_schema);
-    // event_model.createIndexes();
-    return event_model;
+  exportTaskLogModel() {
+    const taskLogSchema = require('./schemas/taskLog');
+    const taskLogModel = mongoose.model(`TaskLogs`, taskLogSchema);
+    return taskLogModel;
   }
 
   disconnect() {

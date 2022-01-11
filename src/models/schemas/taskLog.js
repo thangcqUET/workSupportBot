@@ -1,12 +1,8 @@
 const { Schema } = require('mongoose');
 
 const TaskLogSchema = new Schema({
-  taskLogId: {
-    type: String,
-    required: true,
-  },
   userId: {
-    type: String,
+    type: Number,
     required: true,
   },
   timestamp: {
