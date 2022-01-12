@@ -64,6 +64,12 @@ const mongoDBConnection = require('./models/mongo_connection');
   // rule.hour = [8,10,14,16,17];
   // rule.minute = 30;
   rule.minute = [10,20,30,40,50,59];
+  let rule2 = new nodeSchedule.RecurrenceRule();
+  rule2.dayOfWeek = [1,2,3,4,5];
+  rule2.hour = [17,18,19,20,21,22,23];
+  // rule.hour = [8,10,14,16,17];
+  // rule.minute = 30;
+  rule2.minute = [5,15,25,35,45,55];
   nodeSchedule.scheduleJob(rule, ()=>{
     loggingRemind(bot);
   });
