@@ -1,7 +1,7 @@
 const { Telegraf } = require('telegraf');
 const HttpsProxyAgent = require('https-proxy-agent')
 const process = require('process');
-const mongoDBConnection = require('./src/models/mongo_connection');
+const mongoDBConnection = require('./models/mongo_connection');
 (async ()=>{
   await mongoDBConnection.initMongoDBConnection();
   const bot = new Telegraf(process.env.BOT_TOKEN, {
