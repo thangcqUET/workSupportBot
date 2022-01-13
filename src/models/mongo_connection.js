@@ -15,7 +15,8 @@ class MongoDBConnection extends EventEmitter {
 
   initMongoDBConnection() {
     return new Promise((resolve, reject) => {
-      const url = `mongodb://${this.mongodbHost}:${this.mongodbPort}/${this.mongodbDatabase}`;
+      const url = `mongodb://${(this.mongodbUser||this.mongodbPassword)?(this.mongodbUser+':'+this.mongodbPassword+'@'):''}${this.mongodbHost}:${this.mongodbPort}/${this.mongodbDatabase}`;
+      console.log(url);
       mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
